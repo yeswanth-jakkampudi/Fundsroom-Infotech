@@ -1,0 +1,349 @@
+{
+  "info": {
+    "_postman_id": "mini-erp-crm-api-collection",
+    "name": "Mini ERP & CRM API Collection",
+    "description": "Complete Postman collection for testing Auth, Customer CRM, Products Inventory, and Sales Challans endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login (Sales)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sales@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customer CRM",
+      "item": [
+        {
+          "name": "Get All Customers (With Search & Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers?search=Acme&page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers"],
+              "query": [
+                { "key": "search", "value": "Acme" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rohan Malhotra\",\n  \"mobile\": \"9876543210\",\n  \"email\": \"rohan@malhotratech.com\",\n  \"business_name\": \"Malhotra Tech Systems\",\n  \"gst\": \"27AAACM1234M1Z8\",\n  \"type\": \"B2B\",\n  \"address\": \"Andheri East, Mumbai\",\n  \"status\": \"Active\",\n  \"follow_up_date\": \"2026-08-25\",\n  \"notes\": \"Interested in bulk monitor orders.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers"]
+            }
+          }
+        },
+        {
+          "name": "Get Customer By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Active\",\n  \"notes\": \"Updated credit limit terms.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/customers/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers", "1"]
+            }
+          }
+        },
+        {
+          "name": "Add Follow-up Note",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"note\": \"Discussed Q3 pricing options over call.\",\n  \"follow_up_date\": \"2026-08-28\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/customers/1/followups",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers", "1", "followups"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product & Inventory",
+      "item": [
+        {
+          "name": "Get Products (Paginated & Search)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wireless Laser Mouse\",\n  \"sku\": \"ELE-MSE-W\",\n  \"category\": \"Electronics\",\n  \"unit_price\": 1299.00,\n  \"current_stock\": 50,\n  \"minimum_stock\": 10,\n  \"warehouse_location\": \"Rack E-02\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Update Product Stock & Details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_stock\": 65,\n  \"reason\": \"Received fresh shipment batch #8821\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Stock Movement Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products/movements",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "movements"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales Challans",
+      "item": [
+        {
+          "name": "Create Confirmed Challan (Validates Stock & Deducts Inventory)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"items\": [\n    { \"productId\": 1, \"qty\": 2 },\n    { \"productId\": 3, \"qty": 5 }\n  ],\n  \"status\": \"Confirmed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/challans",
+              "host": ["{{baseUrl}}"],
+              "path": ["challans"]
+            }
+          }
+        },
+        {
+          "name": "Create Draft Challan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 2,\n  \"items\": [\n    { \"productId\": 2, \"qty\": 1 }\n  ],\n  \"status\": \"Draft\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/challans",
+              "host": ["{{baseUrl}}"],
+              "path": ["challans"]
+            }
+          }
+        },
+        {
+          "name": "Get All Sales Challans",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/challans",
+              "host": ["{{baseUrl}}"],
+              "path": ["challans"]
+            }
+          }
+        },
+        {
+          "name": "Get Challan Details by ID (With Line Snapshots)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/challans/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["challans", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Challan Status (Confirm Draft)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Confirmed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/challans/1/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["challans", "1", "status"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "YOUR_JWT_TOKEN_HERE",
+      "type": "string"
+    }
+  ]
+}
