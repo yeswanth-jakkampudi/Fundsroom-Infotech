@@ -50,10 +50,10 @@ mini-erp-crm/
 
 | Role | Email | Password | Allowed Permissions |
 |---|---|---|---|
-| **Admin** | `admin@test.com` | `password123` | Full System Control, CRM, Products, Challans |
-| **Sales** | `sales@test.com` | `password123` | Customer CRM, Follow-ups, Create Sales Challans |
-| **Warehouse** | `warehouse@test.com` | `password123` | Product Catalog, Stock Adjustments, Movement Audit Logs |
-| **Accounts** | `accounts@test.com` | `password123` | Sales Challans View & Status Confirmation |
+| **Admin** | `admin@test.com` | `Password@123` | Full System Control, CRM, Products, Challans |
+| **Sales** | `sales@test.com` | `Password@123` | Customer CRM, Follow-ups, Create Sales Challans |
+| **Warehouse** | `warehouse@test.com` | `Password@123` | Product Catalog, Stock Adjustments, Movement Audit Logs |
+| **Accounts** | `accounts@test.com` | `Password@123` | Sales Challans View & Status Confirmation |
 
 ---
 
