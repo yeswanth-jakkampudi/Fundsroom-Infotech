@@ -34,11 +34,11 @@ async function runTests() {
       {
         host: 'localhost',
         port: 5000,
-        path: '/auth/login',
+        path: '/api/auth/login',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       },
-      { email: 'admin@test.com', password: 'password123' }
+      { email: 'admin@test.com', password: 'Password@123' }
     );
     console.log('2. Login status:', loginRes.status, 'User:', loginRes.data.user?.email, 'Role:', loginRes.data.user?.role);
     const token = loginRes.data.token;
@@ -49,11 +49,11 @@ async function runTests() {
     };
 
     // 3. Customers CRM - Get list & Add
-    const custs = await request({ host: 'localhost', port: 5000, path: '/customers?search=', method: 'GET', headers: authHeaders });
+    const custs = await request({ host: 'localhost', port: 5000, path: '/api/customers?search=', method: 'GET', headers: authHeaders });
     console.log('3. Customers count:', custs.data.data?.length);
 
     // 4. Products - Get list
-    const prods = await request({ host: 'localhost', port: 5000, path: '/products', method: 'GET', headers: authHeaders });
+    const prods = await request({ host: 'localhost', port: 5000, path: '/api/products', method: 'GET', headers: authHeaders });
     console.log('4. Products count:', prods.data.data?.length);
 
     // 5. Create Confirmed Challan & Check Stock Deduction
@@ -62,19 +62,19 @@ async function runTests() {
     console.log(`5. Product '${p1.name}' Initial Stock:`, initialStock);
 
     const challanRes = await request(
-      { host: 'localhost', port: 5000, path: '/challans', method: 'POST', headers: authHeaders },
+      { host: 'localhost', port: 5000, path: '/api/challans', method: 'POST', headers: authHeaders },
       { customerId: 1, items: [{ productId: p1.id, qty: 2 }], status: 'Confirmed' }
     );
     console.log('6. Create Confirmed Challan status:', challanRes.status, 'Challan No:', challanRes.data.challan?.challan_number);
 
     // Verify Stock Reduction
-    const prodsAfter = await request({ host: 'localhost', port: 5000, path: '/products', method: 'GET', headers: authHeaders });
+    const prodsAfter = await request({ host: 'localhost', port: 5000, path: '/api/products', method: 'GET', headers: authHeaders });
     const p1After = prodsAfter.data.data.find((p) => p.id === p1.id);
     console.log(`7. Product '${p1.name}' Stock After Dispatch:`, p1After.current_stock, `(Deducted: ${initialStock - p1After.current_stock})`);
 
     // 8. Test Negative Stock Prevention
     const excessiveChallan = await request(
-      { host: 'localhost', port: 5000, path: '/challans', method: 'POST', headers: authHeaders },
+      { host: 'localhost', port: 5000, path: '/api/challans', method: 'POST', headers: authHeaders },
       { customerId: 1, items: [{ productId: p1.id, qty: 99999 }], status: 'Confirmed' }
     );
     console.log('8. Excessive Stock Attempt Status:', excessiveChallan.status, 'Error Msg:', excessiveChallan.data.message);
