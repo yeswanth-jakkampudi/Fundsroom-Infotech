@@ -15,7 +15,9 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.trim() !== '') {
   isPg = true;
   pgPool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_URL.includes('localhost') ? false : { rejectUnauthorized: false }
+    ssl: process.env.DATABASE_URL.includes('localhost') ? false : { rejectUnauthorized: false },
+    // Force IPv4 - Render free tier does not support IPv6
+    family: 4,
   });
   console.log('🔗 Database Mode: PostgreSQL');
 } else {
